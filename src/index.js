@@ -12,13 +12,16 @@
 
  Другими словами: функция должна возвращать в неизменном виде то, что поступает ей на вход
  */
-function returnFirstArgument() {
+function returnFirstArgument(someParam) {
+  return someParam;
 }
 
 /*
  Задание 2:
 
  2.1: Функция должна возвращать сумму переданных аргументов
+
+
 
  Пример:
    sumWithDefaults(10, 20) вернет 30
@@ -29,7 +32,8 @@ function returnFirstArgument() {
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b) {
+function sumWithDefaults(a, b = 100) {
+  return a + b;
 }
 
 /*
@@ -41,8 +45,10 @@ function sumWithDefaults(a, b) {
    returnFnResult(() => 'привет') вернет 'привет'
  */
 function returnFnResult(fn) {
+  return fn();
 }
 
+returnFnResult(() => "Hi");
 /*
  Задание 4:
 
@@ -56,7 +62,9 @@ function returnFnResult(fn) {
    console.log(f()); // выведет 12
    console.log(f()); // выведет 13
  */
-function returnCounter(number) {
+function returnCounter(number = 0) {
+  let F = () => ++number;
+  return F;
 }
 
 /*
@@ -69,7 +77,11 @@ function returnCounter(number) {
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
 function returnArgumentsArray() {
+  return [...arguments];
+  // return argumentsArray;
 }
+
+returnArgumentsArray(1, 2, 3);
 
 /*
  Задание 6 *:
@@ -86,14 +98,23 @@ function returnArgumentsArray() {
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {
+
+function bindFunction(F, ...params) {
+  return F(...params);
 }
 
-export {
-    returnFirstArgument,
-    sumWithDefaults,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
+function sum(...params) {
+  return params.reduce((a, b) => a + b, 0);
 }
+
+let newSum = bindFunction(sum, 1, 2, 3, 4, 5, 6);
+console.log(newSum);
+
+export {
+  returnFirstArgument,
+  sumWithDefaults,
+  returnArgumentsArray,
+  returnFnResult,
+  returnCounter,
+  bindFunction,
+};
